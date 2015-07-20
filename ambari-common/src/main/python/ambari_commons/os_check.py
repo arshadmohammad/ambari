@@ -141,7 +141,7 @@ class OSCheck:
     if platform.system() == SYSTEM_WINDOWS:
       # windows distribution
       major, minor, build, code = _get_windows_version()
-      if code in (VER_NT_DOMAIN_CONTROLLER, VER_NT_SERVER):
+      if code in (VER_NT_WORKSTATION, VER_NT_DOMAIN_CONTROLLER, VER_NT_SERVER):
         # we are on server os
         release = None
         if major == 6:
