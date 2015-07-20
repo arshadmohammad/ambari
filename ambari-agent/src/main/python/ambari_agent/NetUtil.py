@@ -18,6 +18,7 @@ from urlparse import urlparse
 import logging
 import httplib
 from ssl import SSLError
+import ssl
 from HeartbeatHandlers import HeartbeatStopHandlers
 
 ERROR_SSL_WRONG_VERSION = "SSLError: Failed to connect. Please check openssl library versions. \n" +\
@@ -60,8 +61,9 @@ class NetUtil:
     responseBody = ""
 
     try:
+	  context=ssl._create_unverified_context();
       parsedurl = urlparse(url)
-      ca_connection = httplib.HTTPSConnection(parsedurl[1])
+      ca_connection = httplib.HTTPSConnection(parsedurl[1],context=context)
       ca_connection.request("GET", parsedurl[2])
       response = ca_connection.getresponse()
       status = response.status
