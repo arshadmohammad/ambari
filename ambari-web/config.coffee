@@ -96,4 +96,4 @@ exports.config =
     base: '/'
     run: no
 
-  sourceMaps: false
+  sourceMaps: true
