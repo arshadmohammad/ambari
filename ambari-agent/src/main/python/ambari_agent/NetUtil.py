@@ -61,7 +61,7 @@ class NetUtil:
     responseBody = ""
 
     try:
-	  context=ssl._create_unverified_context();
+      context=ssl._create_unverified_context();
       parsedurl = urlparse(url)
       ca_connection = httplib.HTTPSConnection(parsedurl[1],context=context)
       ca_connection.request("GET", parsedurl[2])
