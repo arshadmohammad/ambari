@@ -126,5 +126,26 @@ public class StackAdvisorRunnerTest {
       fail("Should not fail with StackAdvisorException");
     }
   }
+  
+  @Test
+  public void testprepareShellCommand_quoteScriptIfOperatingSystemIsWindows() throws Exception {
+    String script = "resources/scripts/stack_advisor.py";
+    StackAdvisorCommandType saCommandType = StackAdvisorCommandType.RECOMMEND_COMPONENT_LAYOUT;
+    File actionDirectory = temp.newFolder("actionDir");
+    StackAdvisorRunner saRunner = new StackAdvisorRunner();
+    String actualOS = System.getProperty("os.name");
+    System.setProperty("os.name", "Windows x");
+    try
+    {
+        ProcessBuilder prepareShellCommand = saRunner.prepareShellCommand(script, saCommandType, actionDirectory, "dummyOutFile", "dummyErrorFile");
+        String commandStringParameters = prepareShellCommand.command().get(2);
+        String updatedScript = commandStringParameters.split(" ")[0];
+        String expectedScript="\""+script+"\"";
+        assertEquals(expectedScript,updatedScript);
+    }finally
+    {
+        System.setProperty("os.name", actualOS);
+    }
+  }
 
 }

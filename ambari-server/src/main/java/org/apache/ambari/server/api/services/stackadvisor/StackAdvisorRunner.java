@@ -131,6 +131,7 @@ public class StackAdvisorRunner {
     if (System.getProperty("os.name").contains("Windows")) {
       builderParameters.add("cmd");
       builderParameters.add("/c");
+      script="\""+script+"\"";
     } else {
       builderParameters.add("sh");
       builderParameters.add("-c");
