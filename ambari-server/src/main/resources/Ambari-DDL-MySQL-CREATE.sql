@@ -966,8 +966,8 @@ insert into adminprincipaltype (principal_type_id, principal_type_name)
 insert into adminprincipal (principal_id, principal_type_id)
   select 1, 1;
 
-insert into users(user_id, principal_id, user_name, user_password)
-  select 1, 1, 'admin','538916f8943ec225d97a9a86a2c6ec0818c1cd400e09e03b660fdaaec4af29ddbb6f2b1033b81b00';
+insert into users(user_id, active, ldap_user, principal_id, user_name, user_password)
+  select 1, 1, 0, 1, 'admin','538916f8943ec225d97a9a86a2c6ec0818c1cd400e09e03b660fdaaec4af29ddbb6f2b1033b81b00';
 
 insert into adminpermission(permission_id, permission_name, resource_type_id)
   select 1, 'AMBARI.ADMIN', 1
