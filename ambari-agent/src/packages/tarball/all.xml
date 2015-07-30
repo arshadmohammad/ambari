@@ -23,12 +23,86 @@
   -->
   <formats>
     <format>dir</format>
-  </formats>
+    <format>tar.gz</format>
+  </formats>  
   <includeBaseDirectory>false</includeBaseDirectory>
-  <fileSets>
+   <fileSets>
     <fileSet>
-      <directory>src/main/python</directory>
-      <outputDirectory>/</outputDirectory>
+      <directory>src/main/python/ambari_agent</directory>
+      <outputDirectory>/sbin/ambari_agent</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>src/examples</directory>
+      <outputDirectory>/sbin/example</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/../ambari-common/src/main/python/resource_management</directory>
+      <outputDirectory>/sbin/resource_management</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/../ambari-common/src/main/python/ambari_commons</directory>
+      <outputDirectory>/sbin/ambari_commons</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/../ambari-common/src/main/python/ambari_jinja2/ambari_jinja2</directory>
+      <outputDirectory>/sbin/ambari_jinja2</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${basedir}/../ambari-common/src/main/python/ambari_simplejson</directory>
+      <outputDirectory>/sbin/ambari_simplejson</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/conf/windows</directory>
+      <outputDirectory>/bin</outputDirectory>
+      <excludes>
+        <exclude>service_wrapper.py</exclude>
+        <exclude>createservice.ps1</exclude>
+        <exclude>ambari-agent.ini</exclude>
+        <exclude>logging.conf.sample</exclude>
+      </excludes>
+    </fileSet>
+     <fileSet>
+      <directory>${project.basedir}/conf/unix</directory>
+      <outputDirectory>/bin</outputDirectory>
+      <excludes>
+        <exclude>ambari-agent.ini</exclude>
+        <exclude>logging.conf</exclude>
+      </excludes>      
+    </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/conf/windows</directory>
+      <outputDirectory>/sbin</outputDirectory>
+      <includes>
+        <include>service_wrapper.py</include>
+        <include>createservice.ps1</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${target.cache.dir}</directory>
+      <outputDirectory>/cache</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/conf/unix</directory>
+      <outputDirectory>/conf</outputDirectory>
+      <includes>
+        <include>ambari-agent.ini</include>
+        <include>logging.conf</include>
+      </includes>
+    </fileSet>
+    <!--empty directory-->
+    <fileSet>
+      <directory>./</directory>
+      <outputDirectory>/keys</outputDirectory>
+      <excludes>
+        <exclude>*/**</exclude>
+      </excludes>
     </fileSet>
   </fileSets>
+  <files>
+    <file>
+      <source>${project.basedir}/../version</source>
+      <outputDirectory>data</outputDirectory>
+      <filtered>true</filtered>
+    </file>
+  </files>
 </assembly>
