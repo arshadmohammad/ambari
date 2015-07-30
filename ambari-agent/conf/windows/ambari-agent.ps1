@@ -16,7 +16,7 @@
 # description: ambari-agent service
 # processname: ambari-agent
 
-$VERSION="1.3.0-SNAPSHOT"
+$VERSION="2.1.0"
 $HASH="testhash"
 
 switch ($($args[0])){
