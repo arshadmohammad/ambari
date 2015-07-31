@@ -26,22 +26,66 @@
   <files>
     <file>
       <source>${project.build.directory}/${artifact.artifactId}-${artifact.version}.jar</source>
-      <outputDirectory>ambari-server-${project.version}/lib/ambari-server</outputDirectory>
-    </file>
-   <file>
-      <source>${basedir}/src/main/python/ambari-server.py</source>
-      <outputDirectory>/ambari-server-${project.version}/sbin</outputDirectory>
+      <outputDirectory>ambari-server-${project.version}/lib</outputDirectory>
     </file>
     <file>
-      <source>${basedir}/src/main/python/bootstrap.py</source>
-      <outputDirectory>/ambari-server-${project.version}/sbin</outputDirectory>
-    </file>
+      <source>${project.build.directory}/DBConnectionVerification.jar</source>
+      <outputDirectory>ambari-server-${project.version}/resources</outputDirectory>
+    </file>    
     <file>
-      <source>${basedir}/src/main/python/setupAgent.py</source>
-      <outputDirectory>/ambari-server-${project.version}/sbin</outputDirectory>
+      <source>${project.build.directory}/version</source>
+      <outputDirectory>ambari-server-${project.version}/</outputDirectory>
     </file>
   </files>
+  
   <fileSets>
+    <!-- Conf directory -->
+    <fileSet>
+      <directory>${basedir}/conf/unix</directory>
+      <outputDirectory>ambari-server-${project.version}/conf</outputDirectory>
+      <includes>
+        <include>ambari.properties</include>
+        <include>log4j.properties</include>
+        <include>krb5JAASLogin.conf</include>
+      </includes>
+    </fileSet>
+    
+    <!-- Bin directory -->
+    <fileSet>
+      <directory>${basedir}/conf/unix</directory>
+      <outputDirectory>ambari-server-${project.version}/bin</outputDirectory>
+      <includes>
+        <include>ambari-env.sh</include>
+        <include>ambari-sudo.sh</include>
+        <include>install-helper.sh</include>
+        <include>ambari-server.sh</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${basedir}/conf/windows</directory>
+      <outputDirectory>ambari-server-${project.version}/bin</outputDirectory>
+      <includes>
+        <include>ambari-env.cmd</include>
+        <include>install-helper.cmd</include>        
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${basedir}/conf</directory>
+      <outputDirectory>ambari-server-${project.version}/bin</outputDirectory>
+      <includes>
+        <include>ambari-env.sh</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${basedir}/src/main/windows</directory>
+      <outputDirectory>ambari-server-${project.version}/bin</outputDirectory>
+      <includes>
+        <include>ambari-server.cmd</include>
+        <include>ambari-server.ps1</include>
+      </includes>
+    </fileSet>
+    
+    
     <!-- Distro files, readme, licenses, etc -->
     <fileSet>
       <directory>${basedir}/../</directory>
@@ -49,26 +93,32 @@
       <includes>
         <include>*.txt</include>
       </includes>
-    </fileSet>
-     <!--
-    <fileSet>
-      <directory>${project.build.directory}/web/</directory>
-      <outputDirectory>ambari-server-${project.version}/web/</outputDirectory>
+    </fileSet>  
+    
+    <!-- Sbin directory -->
+   <fileSet>
+      <directory>${basedir}/src/main/python</directory>
+      <outputDirectory>ambari-server-${project.version}/sbin/</outputDirectory>
       <includes>
-        <include>*</include>
+        <include>**</include>       
       </includes>
     </fileSet>
-    -->
-    <!--
     <fileSet>
-      <directory>${basedir}/src/main/bin</directory>
-      <outputDirectory>ambari-server-${project.version}/bin</outputDirectory>
-      <includes>
-        <include>*</include>
-      </includes>
-      <fileMode>0755</fileMode>
+      <directory>${basedir}/../ambari-common/src/main/python/ambari_commons</directory>
+      <outputDirectory>ambari-server-${project.version}/sbin/ambari_commons</outputDirectory>
     </fileSet>
-    -->
+    <fileSet>
+      <directory>${basedir}/../ambari-common/src/main/python/ambari_jinja2/ambari_jinja2</directory>
+      <outputDirectory>ambari-server-${project.version}/sbin/ambari_jinja2</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${basedir}/../ambari-common/src/main/python/ambari_simplejson</directory>
+      <outputDirectory>ambari-server-${project.version}/sbin/ambari_simplejson</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>${basedir}/../ambari-common/src/main/python/resource_management</directory>
+      <outputDirectory>ambari-server-${project.version}/sbin/resource_management</outputDirectory>
+    </fileSet>
     <fileSet>
       <directory>${basedir}/src/main/resources/</directory>
       <outputDirectory>/ambari-server-${project.version}/keystore</outputDirectory>
@@ -85,23 +135,34 @@
         <include>**</include>
       </includes>
     </fileSet>
+    
+    <!-- Resource directory -->
     <fileSet>
-      <directory>src/main/conf</directory>
-      <outputDirectory>/ambari-server-${project.version}/etc/ambari-server/conf</outputDirectory>
+      <directory>${basedir}/src/main/resources</directory>
+      <outputDirectory>/ambari-server-${project.version}/resources/</outputDirectory>
+      <includes>
+        <include>Ambari-DDL-SQLServer-*.sql</include>
+        <include>custom_action_definitions/**</include>
+        <include>custom_actions/**</include>
+        <include>host_scripts/**</include>
+        <include>stacks/stack_advisor.py</include>
+        <include>scripts/**</include>
+        <include>common-services/**</include>
+        <include>stacks/OPENSTACK/**</include>
+        <include>upgrade/**</include>
+      </includes>
     </fileSet>
     <fileSet>
-      <directory>src/main/resources</directory>
-      <outputDirectory>/ambari-server-${project.version}/var/lib/ambari-server/resources/</outputDirectory>
+      <directory>${basedir}/docs</directory>
+      <outputDirectory>/ambari-server-${project.version}/resources/docs</outputDirectory>
       <includes>
-        <include>common-services/**</include>
-        <include>stacks/stack_advisor.py</include>
-        <include>stacks/${stack.distribution}/**</include>
+        <include>**</include>
       </includes>
     </fileSet>
   </fileSets>
   <dependencySets>
     <dependencySet>
-      <outputDirectory>ambari-server-${project.version}/lib/ambari-server</outputDirectory>
+      <outputDirectory>ambari-server-${project.version}/lib</outputDirectory>
       <unpack>false</unpack>
       <scope>compile</scope>
     </dependencySet>
