@@ -141,7 +141,7 @@
       <directory>${basedir}/src/main/resources</directory>
       <outputDirectory>/ambari-server-${project.version}/resources/</outputDirectory>
       <includes>
-        <include>Ambari-DDL-SQLServer-*.sql</include>
+        <include>Ambari-*.sql</include>
         <include>custom_action_definitions/**</include>
         <include>custom_actions/**</include>
         <include>host_scripts/**</include>
