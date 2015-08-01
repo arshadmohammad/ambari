@@ -345,7 +345,7 @@ public class ControllerModule extends AbstractModule {
 
     Properties persistenceProperties = ControllerModule.getPersistenceProperties(configuration);
 
-    if (!persistenceType.equals(PersistenceType.IN_MEMORY)) {
+    //if (!persistenceType.equals(PersistenceType.IN_MEMORY)) {
       persistenceProperties.setProperty(JDBC_USER, configuration.getDatabaseUser());
       persistenceProperties.setProperty(JDBC_PASSWORD, configuration.getDatabasePassword());
 
@@ -368,7 +368,7 @@ public class ControllerModule extends AbstractModule {
       persistenceProperties.setProperty(DDL_GENERATION_MODE, DDL_BOTH_GENERATION);
       persistenceProperties.setProperty(CREATE_JDBC_DDL_FILE, "DDL-create.jdbc");
       persistenceProperties.setProperty(DROP_JDBC_DDL_FILE, "DDL-drop.jdbc");
-    }
+    //}
 
     jpaPersistModule.properties(persistenceProperties);
     return jpaPersistModule;

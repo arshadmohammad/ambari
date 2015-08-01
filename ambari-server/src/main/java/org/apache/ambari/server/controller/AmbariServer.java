@@ -65,7 +65,6 @@ import org.apache.ambari.server.controller.internal.UserPrivilegeResourceProvide
 import org.apache.ambari.server.controller.internal.ViewPermissionResourceProvider;
 import org.apache.ambari.server.controller.utilities.DatabaseChecker;
 import org.apache.ambari.server.orm.GuiceJpaInitializer;
-import org.apache.ambari.server.orm.PersistenceType;
 import org.apache.ambari.server.orm.dao.BlueprintDAO;
 import org.apache.ambari.server.orm.dao.ClusterDAO;
 import org.apache.ambari.server.orm.dao.GroupDAO;
@@ -601,7 +600,7 @@ public class AmbariServer {
    */
   @Transactional
   protected void initDB() throws AmbariException {
-    if (configs.getPersistenceType() == PersistenceType.IN_MEMORY || dbInitNeeded) {
+    if (/*configs.getPersistenceType() == PersistenceType.IN_MEMORY ||*/ dbInitNeeded) {
       LOG.info("Database init needed - creating default data");
       Users users = injector.getInstance(Users.class);
 
