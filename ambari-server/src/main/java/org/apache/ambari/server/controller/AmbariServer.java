@@ -75,7 +75,6 @@ import org.apache.ambari.server.orm.dao.PrivilegeDAO;
 import org.apache.ambari.server.orm.dao.ResourceDAO;
 import org.apache.ambari.server.orm.dao.UserDAO;
 import org.apache.ambari.server.orm.dao.ViewInstanceDAO;
-import org.apache.ambari.server.orm.entities.MetainfoEntity;
 import org.apache.ambari.server.resources.ResourceManager;
 import org.apache.ambari.server.resources.api.rest.GetResource;
 import org.apache.ambari.server.scheduler.ExecutionScheduleManager;
@@ -84,7 +83,6 @@ import org.apache.ambari.server.security.SecurityFilter;
 import org.apache.ambari.server.security.authorization.AmbariAuthorizationFilter;
 import org.apache.ambari.server.security.authorization.AmbariLdapAuthenticationProvider;
 import org.apache.ambari.server.security.authorization.AmbariLocalUserDetailsService;
-import org.apache.ambari.server.security.authorization.Users;
 import org.apache.ambari.server.security.authorization.internal.AmbariInternalAuthenticationProvider;
 import org.apache.ambari.server.security.ldap.AmbariLdapDataPopulator;
 import org.apache.ambari.server.security.unsecured.rest.CertificateDownload;
@@ -107,8 +105,8 @@ import org.eclipse.jetty.server.ssl.SslSelectChannelConnector;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlets.GzipFilter;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.servlets.GzipFilter;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.slf4j.Logger;
@@ -600,19 +598,10 @@ public class AmbariServer {
    */
   @Transactional
   protected void initDB() throws AmbariException {
-    if (/*configs.getPersistenceType() == PersistenceType.IN_MEMORY ||*/ dbInitNeeded) {
-      LOG.info("Database init needed - creating default data");
-      Users users = injector.getInstance(Users.class);
-
-      users.createUser("admin", "admin");
-      users.createUser("user", "user");
-
-      MetainfoEntity schemaVersion = new MetainfoEntity();
-      schemaVersion.setMetainfoName(Configuration.SERVER_VERSION_KEY);
-      schemaVersion.setMetainfoValue(ambariMetaInfo.getServerVersion());
-
-      metainfoDAO.create(schemaVersion);
-    }
+      
+      DatabaseInitializer databaseInitializer = injector.getInstance(DatabaseInitializer.class);
+      databaseInitializer.initializeDatabase();
+    
   }
 
   public void stop() throws Exception {
@@ -697,10 +686,10 @@ public class AmbariServer {
   }
 
   public static void main(String[] args) throws Exception {
-    Injector injector = Guice.createInjector(new ControllerModule());
 
     AmbariServer server = null;
     try {
+      Injector injector = Guice.createInjector(new ControllerModule());
       LOG.info("Getting the controller");
 
       setupProxyAuth();

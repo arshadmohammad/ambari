@@ -34,6 +34,7 @@ import static org.eclipse.persistence.config.PersistenceUnitProperties.NON_JTA_D
 import static org.eclipse.persistence.config.PersistenceUnitProperties.THROW_EXCEPTIONS;
 
 import java.beans.PropertyVetoException;
+import java.io.File;
 import java.lang.annotation.Annotation;
 import java.security.SecureRandom;
 import java.text.MessageFormat;
@@ -198,8 +199,16 @@ public class ControllerModule extends AbstractModule {
       case IN_MEMORY:
         properties.setProperty(JDBC_URL, Configuration.JDBC_IN_MEMORY_URL);
         properties.setProperty(JDBC_DRIVER, Configuration.JDBC_IN_MEMROY_DRIVER);
-        properties.setProperty(DDL_GENERATION, DROP_AND_CREATE);
         properties.setProperty(THROW_EXCEPTIONS, "true");
+        File file=new File("database");
+        if(!file.exists())
+        {
+            file.mkdirs();
+        }
+        String absolutePath = file.getAbsolutePath();
+        absolutePath=absolutePath.replace("\\", "/");
+        System.setProperty("derby.system.home",absolutePath);
+        break;
       case REMOTE:
         properties.setProperty(JDBC_URL, configuration.getDatabaseUrl());
         properties.setProperty(JDBC_DRIVER, configuration.getDatabaseDriver());
@@ -360,6 +369,7 @@ public class ControllerModule extends AbstractModule {
           break;
         case CREATE_OR_EXTEND:
           persistenceProperties.setProperty(DDL_GENERATION, CREATE_OR_EXTEND);
+          dbInitNeeded = true;
           break;
         default:
           break;
