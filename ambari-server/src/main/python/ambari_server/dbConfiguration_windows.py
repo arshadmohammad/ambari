@@ -285,10 +285,10 @@ class MSSQLConfig(DBMSConfig):
     os.environ[self.env_var_db_log_name] = self.database_name + '_log'
 
     # Don't create the database, assume it already exists. Just clear out the known tables structure
-    MSSQLConfig._execute_db_script(self.database_host, self.drop_tables_script_file)
+    #MSSQLConfig._execute_db_script(self.database_host, self.drop_tables_script_file)
 
     # Init DB
-    MSSQLConfig._execute_db_script(self.database_host, self.init_script_file)
+    #MSSQLConfig._execute_db_script(self.database_host, self.init_script_file)
     pass
 
   @staticmethod
