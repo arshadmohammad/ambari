@@ -93,7 +93,7 @@
     
     <fileSet>
       <directory>${basedir}/conf/unix</directory>
-      <outputDirectory>ambari-server-${project.version}/bin</outputDirectory>
+      <outputDirectory>ambari-server-${project.version}</outputDirectory>
       <includes>       
         <include>ambari-server.sh</include>
       </includes>
@@ -134,11 +134,11 @@
       <outputDirectory>ambari-server-${project.version}/sbin/resource_management</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>${basedir}/src/main/resources/</directory>
+      <directory>${basedir}/src/main/resources/db</directory>
       <outputDirectory>/ambari-server-${project.version}/keystore</outputDirectory>
       <includes>
-        <include>db/*</include>
-        <include>ca.config</include>
+        <include>ca.key</include>
+        <include>keystore</include>
         <include>pass.txt</include>
       </includes>
     </fileSet>
