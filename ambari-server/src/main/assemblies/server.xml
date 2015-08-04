@@ -57,8 +57,7 @@
       <includes>
         <include>ambari-env.sh</include>
         <include>ambari-sudo.sh</include>
-        <include>install-helper.sh</include>
-        <include>ambari-server.sh</include>
+        <include>install-helper.sh</include>        
       </includes>
     </fileSet>
     <fileSet>
@@ -79,9 +78,24 @@
     <fileSet>
       <directory>${basedir}/src/main/windows</directory>
       <outputDirectory>ambari-server-${project.version}/bin</outputDirectory>
-      <includes>
-        <include>ambari-server.cmd</include>
+      <includes>       
         <include>ambari-server.ps1</include>
+      </includes>
+    </fileSet>
+    
+    <fileSet>
+      <directory>${basedir}/src/main/windows</directory>
+      <outputDirectory>ambari-server-${project.version}</outputDirectory>
+      <includes>
+        <include>ambari-server.cmd</include>        
+      </includes>
+    </fileSet>
+    
+    <fileSet>
+      <directory>${basedir}/conf/unix</directory>
+      <outputDirectory>ambari-server-${project.version}/bin</outputDirectory>
+      <includes>       
+        <include>ambari-server.sh</include>
       </includes>
     </fileSet>
     
@@ -137,6 +151,21 @@
     </fileSet>
     
     <!-- Resource directory -->
+    <fileSet>
+      <directory>${basedir}/../ambari-admin/target</directory>
+      <outputDirectory>/ambari-server-${project.version}/resources/views</outputDirectory>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${basedir}/../contrib/views/target</directory>
+      <outputDirectory>/ambari-server-${project.version}/resources/views</outputDirectory>
+      <includes>
+        <include>*.jar</include>        
+      </includes>
+    </fileSet>  
+    
     <fileSet>
       <directory>${basedir}/src/main/resources</directory>
       <outputDirectory>/ambari-server-${project.version}/resources/</outputDirectory>
