@@ -181,7 +181,7 @@ public class Configuration {
   public static final String JDBC_UNIT_NAME = "ambari-server";
   public static final String JDBC_LOCAL_URL = "jdbc:postgresql://localhost/";
   public static final String JDBC_LOCAL_DRIVER = "org.postgresql.Driver";
-  public static final String JDBC_IN_MEMORY_URL = "jdbc:derby:ambari;create=true";
+  public static final String JDBC_IN_MEMORY_URL = "jdbc:derby:memory:myDB/ambari;create=true";
   public static final String JDBC_IN_MEMROY_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
   public static final String HOSTNAME_MACRO = "{hostname}";
   public static final String JDBC_RCA_LOCAL_URL = "jdbc:postgresql://" + HOSTNAME_MACRO + "/ambarirca";
@@ -1194,12 +1194,7 @@ public class Configuration {
   }
 
   public JPATableGenerationStrategy getJPATableGenerationStrategy() {
-    String tableGeneratePolicy=System.getProperty(SERVER_JDBC_GENERATE_TABLES_KEY);
-    if(null==tableGeneratePolicy)
-    {
-        tableGeneratePolicy=properties.getProperty(SERVER_JDBC_GENERATE_TABLES_KEY, JPATableGenerationStrategy.CREATE_OR_EXTEND.getValue());
-    }
-    return JPATableGenerationStrategy.fromString(tableGeneratePolicy);
+    return JPATableGenerationStrategy.fromString(System.getProperty(SERVER_JDBC_GENERATE_TABLES_KEY));
   }
 
   public int getConnectionMaxIdleTime() {
