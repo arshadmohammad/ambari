@@ -237,7 +237,7 @@ def server_process_main(options, scmStatus=None):
 
   ensure_jdbc_driver_is_installed(options, properties)
 
-  ensure_dbms_is_running(options, properties, scmStatus)
+  #ensure_dbms_is_running(options, properties, scmStatus)
 
   if scmStatus is not None:
     scmStatus.reportStartPending()
@@ -273,8 +273,12 @@ def server_process_main(options, scmStatus=None):
     os.makedirs(configDefaults.PID_DIR, 0755)
 
   print_info_msg("Running server: " + str(param_list))
-  procJava = subprocess.Popen(param_list, env=environ)
-
+  try:
+      procJava = subprocess.Popen(param_list, env=environ)
+  except Exception as e:
+      e.print_stack_trace();
+      
+     
   pidJava = procJava.pid
   if pidJava <= 0:
     procJava.terminate()
