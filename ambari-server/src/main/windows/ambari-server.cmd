@@ -1,2 +1,2 @@
 @echo off
-powershell -ExecutionPolicy unrestricted -File ambari-server.ps1 %*
+powershell -ExecutionPolicy unrestricted -File bin/ambari-server.ps1 %*
