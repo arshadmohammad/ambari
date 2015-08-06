@@ -23,7 +23,9 @@ import sys
 import subprocess
 from Controller import AGENT_AUTO_RESTART_EXIT_CODE
 
-if os.environ.has_key("PYTHON_BIN"):
+if os.environ.has_key("AGENT_SCRIPT"):
+  AGENT_SCRIPT = os.environ["AGENT_SCRIPT"]
+elif os.environ.has_key("PYTHON_BIN"):
   AGENT_SCRIPT = os.path.join(os.environ["PYTHON_BIN"],"site-packages/ambari_agent/main.py")
 else:
   AGENT_SCRIPT = "/usr/lib/python2.6/site-packages/ambari_agent/main.py"
