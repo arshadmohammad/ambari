@@ -209,7 +209,9 @@ case "$1" in
           else
             echo "Stopping $AMBARI_AGENT"
             change_files_permissions
-            $PYTHON $AGENT_SCRIPT stop
+            #$PYTHON $AGENT_SCRIPT stop
+            ./ambari-sudo.sh kill -9 $PID
+            ./ambari-sudo.sh rm -f $PIDFILE
           fi
           echo "Removing PID file at $PIDFILE"
           ./ambari-sudo.sh rm -f $PIDFILE
