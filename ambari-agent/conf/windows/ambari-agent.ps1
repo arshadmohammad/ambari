@@ -52,11 +52,11 @@ $current_directory = (Get-Item -Path ".\" -Verbose).FullName
 $Env:PYTHONPATH="$current_directory\sbin;$($Env:PYTHONPATH)"
 $Env:PYTHON = "python.exe"
 
-$AMBARI_LOG_DIR="\var\log\ambari-agent"
+$AMBARI_LOG_DIR="logs"
 $OUTFILE_STDOUT=Join-Path -path $AMBARI_LOG_DIR -childpath "ambari-agent.stdout"
 $OUTFILE_STDERR=Join-Path -path $AMBARI_LOG_DIR -childpath "ambari-agent.stderr"
 $LOGFILE=Join-Path -path $AMBARI_LOG_DIR -childpath "ambari-agent.log"
-$AMBARI_AGENT_PY_SCRIPT=Join-Path -path $PSScriptRoot -childpath "sbin\service_wrapper.py"
+$AMBARI_AGENT_PY_SCRIPT=Join-Path -path $current_directory -childpath "sbin\service_wrapper.py"
 if($AMBARI_AGENT_PY_SCRIPT.Contains(' '))
 {
   $AMBARI_AGENT_PY_SCRIPT = """" + $AMBARI_AGENT_PY_SCRIPT + """"

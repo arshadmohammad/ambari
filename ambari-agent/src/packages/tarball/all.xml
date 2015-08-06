@@ -53,7 +53,7 @@
     </fileSet>
     <fileSet>
       <directory>${project.basedir}/conf/windows</directory>
-      <outputDirectory>/bin</outputDirectory>
+      <outputDirectory>/</outputDirectory>
       <excludes>
         <exclude>service_wrapper.py</exclude>
         <exclude>createservice.ps1</exclude>
@@ -63,11 +63,21 @@
     </fileSet>
      <fileSet>
       <directory>${project.basedir}/conf/unix</directory>
-      <outputDirectory>/bin</outputDirectory>
+      <outputDirectory>/</outputDirectory>
       <excludes>
+        <exclude>upgrade_agent_configs.py</exclude>
+        <exclude>ambari-agent</exclude>
         <exclude>ambari-agent.ini</exclude>
         <exclude>logging.conf</exclude>
       </excludes>      
+    </fileSet>
+     <fileSet>
+      <directory>${project.basedir}/conf/unix</directory>
+      <outputDirectory>/conf</outputDirectory>
+      <includes>
+        <include>ambari-agent.ini</include>
+        <include>logging.conf</include>    
+      </includes>      
     </fileSet>
     <fileSet>
       <directory>${project.basedir}/conf/windows</directory>
@@ -80,14 +90,6 @@
     <fileSet>
       <directory>${target.cache.dir}</directory>
       <outputDirectory>/cache</outputDirectory>
-    </fileSet>
-    <fileSet>
-      <directory>${project.basedir}/conf/unix</directory>
-      <outputDirectory>/conf</outputDirectory>
-      <includes>
-        <include>ambari-agent.ini</include>
-        <include>logging.conf</include>
-      </includes>
     </fileSet>
     <!--empty directory-->
     <fileSet>

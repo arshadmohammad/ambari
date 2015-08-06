@@ -15,6 +15,6 @@ REM See the License for the specific language governing permissions and
 REM limitations under the License.
 
 set SERVICE_NAME=Ambari Agent
-REM set AMBARI_AGENT_CONF_DIR=C:\work\test\agent
-REM set AMBARI_AGENT_LOG_DIR=logs
+set AMBARI_AGENT_CONF_DIR=conf
+set AMBARI_AGENT_LOG_DIR=logs
 set AGENT_SERVICE_WRAPPER=sbin\service_wrapper.py
