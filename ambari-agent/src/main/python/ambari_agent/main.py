@@ -23,6 +23,21 @@ import logging.config
 import signal
 from optparse import OptionParser
 import sys
+REMOTE_DBG =False 
+
+# append pydev remote debugger
+if REMOTE_DBG:
+    # Make pydev debugger works for auto reload.
+    # Note pydevd module need to be copied in XBMC\system\python\Lib\pysrc
+    try:
+        import pydevd as pydevd # with the addon script.module.pydevd, only use `import pydevd`
+    # stdoutToServer and stderrToServer redirect stdout and stderr to eclipse console
+        pydevd.settrace('localhost', port=5678, stdoutToServer=True, stderrToServer=True)
+    except ImportError as a:
+        print a
+        sys.stderr.write("Error: " +
+            "You must add org.python.pydev.debug.pysrc to your PYTHONPATH. ")
+        sys.exit(1)
 import traceback
 import getpass
 import os
