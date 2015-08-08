@@ -47,6 +47,7 @@
         <include>ambari.properties</include>
         <include>log4j.properties</include>
         <include>krb5JAASLogin.conf</include>
+        <include>password.dat</include>
       </includes>
     </fileSet>
     
@@ -57,7 +58,8 @@
       <includes>
         <include>ambari-env.sh</include>
         <include>ambari-sudo.sh</include>
-        <include>install-helper.sh</include>        
+        <include>install-helper.sh</include>
+        <include>dbCheck.sh</include> 
       </includes>
     </fileSet>
     <fileSet>
