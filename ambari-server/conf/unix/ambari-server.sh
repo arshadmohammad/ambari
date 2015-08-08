@@ -20,7 +20,12 @@
 # limitations under the License.
 
 # /etc/init.d/ambari-server
-
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+export INSTALL_DIR=$DIR
+export ROOT_FS_PATH=$DIR
+export AMBARI_SERVER_LIB=$INSTALL_DIR/lib
+export STACK_LOCATION_DEFAULT=$INSTALL_DIR/resources/stacks
+export OUT_DIR=$INSTALL_DIR/logs
 VERSION="2.1.0"
 HASH="${buildNumber}"
 
@@ -35,11 +40,11 @@ case "$1" in
         ;;
 esac
 
-export PATH=/usr/lib/ambari-server/*:$PATH:/sbin/:/usr/sbin
-export AMBARI_CONF_DIR=/etc/ambari-server/conf
+export AMBARI_CONF_DIR=$INSTALL_DIR/conf
+export PATH=$INSTALL_DIR/lib/*:$AMBARI_CONF_DIR:$PATH
 
 # Because Ambari rpm unpacks modules here on all systems
-export PYTHONPATH=/usr/lib/python2.6/site-packages:$PYTHONPATH
+export PYTHONPATH=sbin:/opt/pysrc:$PYTHONPATH
 
 if [ -a /usr/bin/python2.7 ] && [ -z "$PYTHON" ]; then
   PYTHON=/usr/bin/python2.7
@@ -49,8 +54,8 @@ if [ -a /usr/bin/python2.6 ] && [ -z "$PYTHON" ]; then
   PYTHON=/usr/bin/python2.6
 fi
 
-if [ -a /var/lib/ambari-server/ambari-env.sh ]; then
-  . /var/lib/ambari-server/ambari-env.sh
+if [ -a bin/ambari-env.sh ]; then
+  bin/ambari-env.sh
 fi
 
 if [ -z "$PYTHON" ]; then
@@ -76,20 +81,19 @@ if (( $numversion < 26 )); then
   exit 1
 fi
 echo "Using python " $PYTHON
-
 ret=0
 case "$1" in
   start)
         echo -e "Starting ambari-server"
-        $PYTHON /usr/sbin/ambari-server.py $@
+        $PYTHON sbin/ambari-server.py $@
         ;;
   stop)
         echo -e "Stopping ambari-server"
-        $PYTHON /usr/sbin/ambari-server.py $@
+        $PYTHON sbin/ambari-server.py $@
         ;;
   reset)
         echo -e "Resetting ambari-server"
-        $PYTHON /usr/sbin/ambari-server.py $@
+        $PYTHON sbin/ambari-server.py $@
         ;;
   restart)
         echo -e "Restarting ambari-server"
@@ -98,56 +102,56 @@ case "$1" in
         ;;
   upgrade)
         echo -e "Upgrading ambari-server"
-        $PYTHON /usr/sbin/ambari-server.py $@
+        $PYTHON sbin/ambari-server.py $@
         ;;
   status)
         echo -e "Ambari-server status"
-        $PYTHON /usr/sbin/ambari-server.py $@
+        $PYTHON sbin/ambari-server.py $@
         ;;
   upgradestack)
         echo -e "Upgrading stack of ambari-server"
-        $PYTHON /usr/sbin/ambari-server.py $@
+        $PYTHON sbin/ambari-server.py $@
         ;;
   setup)
         echo -e "Setup ambari-server"
-        $PYTHON /usr/sbin/ambari-server.py $@
+        $PYTHON sbin/ambari-server.py $@
         ;;
   setup-jce)
         echo -e "Updating jce policy"
-        $PYTHON /usr/sbin/ambari-server.py $@
+        $PYTHON sbin/ambari-server.py $@
         ;;
   setup-ldap)
         echo -e "Setting up LDAP properties..."
-        $PYTHON /usr/sbin/ambari-server.py $@
+        $PYTHON sbin/ambari-server.py $@
         ;;
   sync-ldap)
         echo -e "Syncing with LDAP..."
-        $PYTHON /usr/sbin/ambari-server.py $@
+        $PYTHON sbin/ambari-server.py $@
         ;;
   set-current)
         echo -e "Setting current version..."
-        $PYTHON /usr/sbin/ambari-server.py $@
+        $PYTHON sbin/ambari-server.py $@
         ;;
   setup-security)
         echo -e "Security setup options..."
-        $PYTHON /usr/sbin/ambari-server.py $@
+        $PYTHON sbin/ambari-server.py $@
         ;;
   refresh-stack-hash)
         echo -e "Refreshing stack hashes..."
-        $PYTHON /usr/sbin/ambari-server.py $@
+        $PYTHON sbin/ambari-server.py $@
         ;;
   backup)
         echo -e "Backing up Ambari File System state... *this will not backup the server database*"
-        $PYTHON /usr/sbin/ambari-server.py $@
+        $PYTHON sbin/ambari-server.py $@
         ;;
   restore)
         echo -e "Restoring Ambari File System state"
-        $PYTHON /usr/sbin/ambari-server.py $@
+        $PYTHON sbin/ambari-server.py $@
         ;;
   *)
-        echo "Usage: /usr/sbin/ambari-server
+        echo "Usage: sbin/ambari-server
         {start|stop|restart|setup|setup-jce|upgrade|status|upgradestack|setup-ldap|sync-ldap|set-current|setup-security|refresh-stack-hash|backup|restore} [options]
-        Use usr/sbin/ambari-server <action> --help to get details on options available.
+        Use sbin/ambari-server <action> --help to get details on options available.
         Or, simply invoke ambari-server.py --help to print the options."
         exit 1
 esac

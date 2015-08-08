@@ -15,7 +15,8 @@
 
 
 AMBARI_PASSHPHRASE="DEV"
-export AMBARI_JVM_ARGS=$AMBARI_JVM_ARGS' -Xms512m -Xmx2048m -Djava.security.auth.login.config=/etc/ambari-server/conf/krb5JAASLogin.conf -Djava.security.krb5.conf=/etc/krb5.conf -Djavax.security.auth.useSubjectCredsOnly=false'
-export PATH=$PATH:/var/lib/ambari-server
+export AMBARI_JVM_ARGS='-Xms512m -Xmx1024m -Djava.security.auth.login.config=conf/krb5JAASLogin.conf -Djava.security.krb5.conf=conf/krb5.conf -Djavax.security.auth.useSubjectCredsOnly=false '
+#export PATH=$PATH:/var/lib/ambari-server
 # to add additional directory or jar to server classpath use SERVER_CLASSPATH variable
 # export SERVER_CLASSPATH=/etc/hadoop/conf/secure
+
