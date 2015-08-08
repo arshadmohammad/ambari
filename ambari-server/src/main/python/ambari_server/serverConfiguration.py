@@ -166,11 +166,16 @@ DEFAULT_DB_NAME = "ambari"
 class ServerConfigDefaults(object):
   def __init__(self):
     self.JAVA_SHARE_PATH = "/usr/share/java"
-    self.OUT_DIR = os.sep + os.path.join("var", "log", "ambari-server")
+    if os.environ.has_key("OUT_DIR"):
+        self.OUT_DIR=os.environ["OUT_DIR"]
+    else:
+        self.OUT_DIR = os.sep + os.path.join("var", "log", "ambari-server")
     self.SERVER_OUT_FILE = os.path.join(self.OUT_DIR, "ambari-server.out")
     self.SERVER_LOG_FILE = os.path.join(self.OUT_DIR, "ambari-server.log")
-    self.ROOT_FS_PATH = os.sep
-
+    if os.environ.has_key("ROOT_FS_PATH"):
+        self.ROOT_FS_PATH =os.environ["ROOT_FS_PATH"]
+    else:
+        self.ROOT_FS_PATH = os.sep   
     self.JDK_INSTALL_DIR = ""
     self.JDK_SEARCH_PATTERN = ""
     self.JAVA_EXE_SUBPATH = ""
