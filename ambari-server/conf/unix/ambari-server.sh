@@ -26,6 +26,7 @@ export ROOT_FS_PATH=$DIR
 export AMBARI_SERVER_LIB=$INSTALL_DIR/lib
 export STACK_LOCATION_DEFAULT=$INSTALL_DIR/resources/stacks
 export OUT_DIR=$INSTALL_DIR/logs
+mkdir -p $OUT_DIR
 VERSION="2.1.0"
 HASH="${buildNumber}"
 
